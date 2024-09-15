@@ -17,17 +17,56 @@ const DashboardScreen = ({ navigation }) => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const { data: session } = await supabase.auth.getSession();
-      if (session) {
-        setUser(session.user);
-      } else {
-        console.log('No active session');
+      try {
+        // Fetch the user session
+        console.log('Fetching user session...');
+        const { data: { session }, error } = await supabase.auth.getSession();
+        
+        // Log the session data and any error
+        console.log('Session Data:', session);
+        if (error) {
+          console.error('Error fetching session:', error.message);
+          setLoading(false);
+          return;
+        }
+
+        if (session && session.user) {
+          setUser(session.user);
+          console.log('User:', session.user);
+        } else {
+          console.log('No active session');
+        }
+      } catch (err) {
+        console.error('Error:', err.message);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     fetchUser();
   }, []);
+
+  // Function to handle recipe press
+  const handlePress = (url) => {
+    Linking.openURL(url).catch((err) => console.error('Failed to open URL:', err));
+  };
+
+  // Function to handle category press
+  const handleCategoryPress = (category) => {
+    const categoryUrls = {
+      'Italian': 'https://www.tasteofhome.com/collection/favorite-italian-recipes/',
+      'Fast Food': 'https://www.tasteofhome.com/collection/best-30-minute-meals/',
+      'Vegetarian': 'https://www.bonappetit.com/recipes/vegetarian/slideshow/easy-vegetarian-dinner-recipes',
+      'Asian': 'https://cookingchew.com/asian-recipes.html',
+    };
+    const url = categoryUrls[category];
+    if (url) {
+      Linking.openURL(url).catch((err) => console.error('Failed to open URL:', err));
+    }
+  };
+
+  // URL for the "Search Recipes" button
+  const allRecipesUrl = 'https://www.allrecipes.com/recipes/';
 
   if (loading) {
     return (
@@ -37,34 +76,13 @@ const DashboardScreen = ({ navigation }) => {
     );
   }
 
-  const handlePress = (url) => {
-    Linking.openURL(url).catch((err) => console.error('Failed to open URL:', err));
-  };
-
-  const categoryUrls = {
-    'Italian': 'https://www.tasteofhome.com/collection/favorite-italian-recipes/',
-    'Fast Food': 'https://www.tasteofhome.com/collection/best-30-minute-meals/',
-    'Vegetarian': 'https://www.bonappetit.com/recipes/vegetarian/slideshow/easy-vegetarian-dinner-recipes',
-    'Asian': 'https://cookingchew.com/asian-recipes.html',
-  };
-  
-  const handleCategoryPress = (category) => {
-    const url = categoryUrls[category];
-    if (url) {
-      Linking.openURL(url).catch((err) => console.error('Failed to open URL:', err));
-    }
-  };
-
-  // URL for the "Search Recipes" button
-  const allRecipesUrl = 'https://www.allrecipes.com/recipes/'; // Replace with your desired URL
-
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollView}>
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.title}>Welcome{user ? `, ${user.email.split('@')[0]}` : ''}</Text>
-          <Text style={styles.subtitle}>Your Recipe Dashboard</Text>
+          <Text style={styles.subtitle}>Transform simple ingredients into extraordinary experiences</Text>
         </View>
 
         {/* Featured Recipes */}

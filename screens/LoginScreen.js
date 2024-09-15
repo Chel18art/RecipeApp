@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { Ionicons } from '@expo/vector-icons'; // For the eye icon
 import { View, TextInput, TouchableOpacity, Text, ImageBackground, StyleSheet, Alert } from 'react-native';
 import { supabase } from '../lib/supabaseClient';  // Import Supabase client
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false); // State for password visibility
 
   const handleLogin = async () => {
     if (email === '' || password === '') {
@@ -36,13 +38,25 @@ const LoginScreen = ({ navigation }) => {
             onChangeText={setEmail}
             style={styles.input}
           />
-          <TextInput
-            placeholder="Password"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-            style={styles.input}
-          />
+          <View style={styles.passwordContainer}>
+            <TextInput
+              placeholder="Password"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry={!isPasswordVisible} // Toggle secure text entry
+              style={styles.passwordInput}
+            />
+            <TouchableOpacity
+              style={styles.eyeIcon}
+              onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+            >
+              <Ionicons
+                name={isPasswordVisible ? 'eye-off-outline' : 'eye-outline'}
+                size={24}
+                color="gray"
+              />
+            </TouchableOpacity>
+          </View>
           <TouchableOpacity
             style={styles.button}
             onPress={handleLogin}
@@ -84,6 +98,23 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 10,
+  },
+  passwordContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 10,
+    marginBottom: 20,
+    paddingRight: 10,
+  },
+  passwordInput: {
+    flex: 1,
+    padding: 15,
+  },
+  eyeIcon: {
+    padding: 10,
   },
   button: {
     backgroundColor: '#FF5722',
