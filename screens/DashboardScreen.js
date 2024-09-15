@@ -13,7 +13,10 @@ const DashboardScreen = ({ navigation }) => {
     { id: '2', name: 'Chicken Alfredo', image: 'https://th.bing.com/th/id/OIP.LzbvMmKys54tSxgfX53_RQAAAA?rs=1&pid=ImgDetMain', url: 'https://mrsfriday.com/chicken-alfredo-recipe-i-wash-you-dry.html' },
     { id: '3', name: 'Beef Stroganoff', image: 'https://i1.wp.com/www.cookingwithbooks.net/wp-content/uploads/2018/01/Beef-Stroganoff-3.jpg?ssl=1', url: 'https://www.cookingwithbooks.net/2018/02/simple-beef-stroganoff.html' },
     { id: '4', name: 'Vegetable Stir Fry', image: 'https://th.bing.com/th/id/OIP.r-Cwcy9B6vk8N6J8IkxDTQAAAA?rs=1&pid=ImgDetMain', url: 'https://natashaskitchen.com/vegetable-stir-fry/' },
-  ];
+    { id: '5', name: 'Grilled Salmon', image: 'https://www.cookingclassy.com/wp-content/uploads/2018/05/grilled-salmon-3.jpg', url: 'https://www.cookingclassy.com/5-ingredient-marinated-grilled-salmon/' },
+    { id: '6', name: 'Taco Salad', image: 'https://th.bing.com/th/id/OIP.H1Pb09Hi7bioJQAEmEUEdAAAAA?rs=1&pid=ImgDetMain', url: 'https://www.cookingclassy.com/taco-salad/' },
+    ];
+
 
   useEffect(() => {
     const fetchUser = async () => {

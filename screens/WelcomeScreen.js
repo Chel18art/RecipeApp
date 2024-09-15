@@ -11,8 +11,8 @@ const WelcomeScreen = ({ navigation }) => {
       >
         <Image source={require('../assets/chef.jpg')} style={styles.chefImage} />
         <View style={styles.whiteBox}>
-          <Text style={styles.title}>Welcome! </Text>
-          <Text style={styles.subtitle}>Choose what your tummy desires</Text>
+          <Text style={styles.title}>Welcome to Tasty Creations! 🍴 </Text>
+          <Text style={styles.subtitle}>Explore easy and delicious recipes that make cooking fun and rewarding. Let’s get started on your next culinary adventure!</Text>
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.navigate('Login')}
